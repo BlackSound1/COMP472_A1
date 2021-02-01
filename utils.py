@@ -12,7 +12,7 @@ def read_documents(path: str) -> (list, list):
     with open(path, 'rb') as f:
         for line in f:
             words = line.strip().split()
-            labels.append(words[0])
+            labels.append(words[1])
             docs.append(words[3:])
     return docs, labels
 
