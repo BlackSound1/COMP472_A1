@@ -1,7 +1,7 @@
 import utils
 import numpy as np
 import matplotlib.pyplot as plt
-from sklearn.naive_bayes import BernoulliNB
+from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
 from sklearn.feature_extraction.text import CountVectorizer
 
@@ -36,7 +36,7 @@ eval_labels = all_labels[split_point:]
 # plt.show()
 
 """Task 2 - Naive Bayes"""
-multiNB = BernoulliNB()
+multiNB = MultinomialNB()
 multiNB.fit(train_docs, train_labels)
 
 y_pred = multiNB.predict(eval_docs)
