@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 """Task 0 - Split training and evaluation data"""
 
 # Read data
-all_docs, all_labels = utils.read_documents('all_sentiment_shuffled.txt')
-
+all_docs, all_labels = utils.read_documents('input/all_sentiment_shuffled.txt')
 # Split point between training and evaluation
 split_point = int(0.80*len(all_docs))
 
