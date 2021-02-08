@@ -46,6 +46,17 @@ def listToString(list: list) -> str:
     return (string.join(list))
 
 def read_data(path: str) -> (list, list):
+  """ Reads the data from the file, cleans it up, and gives 
+      back the laberls and documents
+
+    Args:
+      path (str): The path of the file to read
+
+    Returns:
+      (list, list): 2 lists X and y, containing the documents and labels respectively
+
+      e.g. ["A review of a product"], ["pos"] 
+  """
   #all_text = []
   X, y = [], []
   with open (path, 'rt') as myfile:  
