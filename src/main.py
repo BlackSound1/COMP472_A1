@@ -1,22 +1,17 @@
 import utils
 import matplotlib.pyplot as plt
+from sklearn.model_selection import train_test_split
 
 """Task 0 - Split training and evaluation data"""
-
 # Read data
-all_docs, all_labels = utils.read_documents('input/all_sentiment_shuffled.txt')
-# Split point between training and evaluation
-split_point = int(0.80*len(all_docs))
+X, y = utils.read_data('input/all_sentiment_shuffled.txt')  
 
-# Get training and evaluation data
-train_docs = all_docs[:split_point]
-train_labels = all_labels[:split_point]
-eval_docs = all_docs[split_point:]
-eval_labels = all_labels[split_point:]
+# Split point between training and evaluation
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
 
 """Task 1 - Plot label distribution"""
 # Get label distribution
-label_distribution = utils.get_label_distribution(all_labels)
+label_distribution = utils.get_label_distribution(y)
 print(label_distribution)
 
 # Plot label distribution

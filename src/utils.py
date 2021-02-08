@@ -30,3 +30,32 @@ def get_label_distribution(all_labels: list) -> dict:
     labels = sorted(list(set(all_labels)))
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
+
+def listToString(list: list) -> str:
+    """ Converts a list into a str
+
+    Args:
+      list (list): The list to convert
+
+    Returns:
+      str made from elements of the list.
+
+      e.g. "This was a list" 
+    """
+    string = " "
+    return (string.join(list))
+
+def read_data(path: str) -> (list, list):
+  #all_text = []
+  X, y = [], []
+  with open (path, 'rt') as myfile:  
+      for line in myfile:
+          thisLine = line.split(" ")
+          part_1 = thisLine[1]
+          y.append(part_1)
+
+          part_2 = listToString(thisLine[3:])
+          X.append(part_2)
+
+          #all_text.append(part_1 + " " + part_2) 
+  return X, y        
