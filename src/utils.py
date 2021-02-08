@@ -31,7 +31,7 @@ def get_label_distribution(all_labels: list) -> dict:
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
 
-def listToString(list: list) -> str:
+def list_to_string(list: list) -> str:
     """ Converts a list into a str
 
     Args:
@@ -44,29 +44,4 @@ def listToString(list: list) -> str:
     """
     string = " "
     return (string.join(list))
-
-def read_data(path: str) -> (list, list):
-  """ Reads the data from the file, cleans it up, and gives 
-      back the laberls and documents
-
-    Args:
-      path (str): The path of the file to read
-
-    Returns:
-      (list, list): 2 lists X and y, containing the documents and labels respectively
-
-      e.g. ["A review of a product"], ["pos"] 
-  """
-  #all_text = []
-  X, y = [], []
-  with open (path, 'rt') as myfile:  
-      for line in myfile:
-          thisLine = line.split(" ")
-          part_1 = thisLine[1]
-          y.append(part_1)
-
-          part_2 = listToString(thisLine[3:])
-          X.append(part_2)
-
-          #all_text.append(part_1 + " " + part_2) 
-  return X, y        
+       

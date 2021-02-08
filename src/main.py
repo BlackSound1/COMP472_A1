@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 
 """Task 0 - Split training and evaluation data"""
 # Read data
-X, y = utils.read_data('input/all_sentiment_shuffled.txt')  
+X, y = utils.read_documents('input/all_sentiment_shuffled.txt')  
 
 # Split point between training and evaluation
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
