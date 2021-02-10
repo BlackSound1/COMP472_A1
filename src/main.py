@@ -8,10 +8,12 @@ from sklearn.model_selection import train_test_split
 
 """Task 0 - Split training and evaluation data"""
 # Read data
-X, y = utils.read_documents('input/all_sentiment_shuffled.txt')  
+X, y = utils.read_documents('../input/all_sentiment_shuffled.txt')  
+count_vect = CountVectorizer(analyzer=lambda x: x)
+X_vectorized = count_vect.fit_transform(X)
 
 # Split point between training and evaluation
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)
+X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X_vectorized, y, np.arange(len(X)), test_size=0.2)
 
 """Task 1 - Plot label distribution"""
 # Get label distribution
