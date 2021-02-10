@@ -9,7 +9,7 @@ def read_documents(path: str) -> (list, list):
       Tuple of lists (words, labels) 
     """
     labels, docs = [], []
-    with open(path, 'rb') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             words = line.strip().split()
             labels.append(words[1])
