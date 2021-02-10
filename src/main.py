@@ -1,5 +1,6 @@
 import utils
 import numpy as np
+import pprint
 import matplotlib.pyplot as plt
 from sklearn.naive_bayes import MultinomialNB
 from sklearn import metrics
@@ -26,3 +27,9 @@ plt.bar(label_distribution.keys(), label_distribution.values(), 0.8)
 for x, y in enumerate(label_distribution.values()):
     plt.text(x, y, str(y), horizontalalignment='center')
 plt.show()
+
+"""Task 2 - Naive Bayes"""
+multiNB = MultinomialNB()
+multiNB.fit(X_train, y_train)
+y_pred = multiNB.predict(X_test)
+pprint.pprint(metrics.classification_report(y_test, y_pred, digits=4, output_dict=True))
