@@ -30,18 +30,3 @@ def get_label_distribution(all_labels: list) -> dict:
     labels = sorted(list(set(all_labels)))
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
-
-
-def list_to_string(list: list) -> str:
-    """ Converts a list into a str
-
-    Args:
-      list (list): The list to convert
-
-    Returns:
-      str made from elements of the list.
-
-      e.g. "This was a list" 
-    """
-    string = " "
-    return string.join(list)

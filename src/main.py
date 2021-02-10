@@ -88,6 +88,9 @@ for (name, model, y_pred) in models:
     f.write('\n')
 
     # Write accuracy
-    f.write("accuracy: " + str(accuracy_score(y_test, y_pred)))
+    acc = str(accuracy_score(y_test, y_pred))
+    f.write("accuracy: " + acc)
+
+    print(name, acc)
 
     f.close()
