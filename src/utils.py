@@ -1,4 +1,3 @@
-
 def read_documents(path: str) -> (list, list):
     """Reads data file.
 
@@ -9,12 +8,13 @@ def read_documents(path: str) -> (list, list):
       Tuple of lists (words, labels) 
     """
     labels, docs = [], []
-    with open(path, 'rb') as f:
+    with open(path, 'r') as f:
         for line in f:
             words = line.strip().split()
             labels.append(words[1])
-            docs.append(words[3:])
+            docs.append(' '.join(words[3:]))
     return docs, labels
+
 
 def get_label_distribution(all_labels: list) -> dict:
     """Calculates distribution of labels.
@@ -31,6 +31,7 @@ def get_label_distribution(all_labels: list) -> dict:
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
 
+
 def list_to_string(list: list) -> str:
     """ Converts a list into a str
 
@@ -43,5 +44,4 @@ def list_to_string(list: list) -> str:
       e.g. "This was a list" 
     """
     string = " "
-    return (string.join(list))
-       
+    return string.join(list)
