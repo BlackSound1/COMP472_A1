@@ -1,3 +1,5 @@
+from re import compile, search
+
 
 def read_documents(path: str) -> (list, list):
     """Reads data file.
@@ -14,7 +16,7 @@ def read_documents(path: str) -> (list, list):
             words = line.strip().split()
             labels.append(words[1])
             docs.append(words[3:])
-    return docs, labels
+    return sanitize_text(docs), labels
 
 def get_label_distribution(all_labels: list) -> dict:
     """Calculates distribution of labels.
@@ -44,4 +46,25 @@ def list_to_string(list: list) -> str:
     """
     string = " "
     return (string.join(list))
-       
+
+
+def sanitize_text(lst: list) -> list:
+    """ Sanitizes input by removing numbers, special characters, and useless words
+
+        Args:
+          lst (list): The list of text to convert
+
+        Returns:
+          list: the new list without special characters or numbers
+
+          e.g. ["hello", "1234", "#%$#"] -> ["hello"]
+        """
+    to_return = []
+    regex = \
+        compile(r'[\d!?,.()\]\[#$%^\"&*\'+=\-_\\/|]+|\b(th(e|ey|is|at|ere|eir)|an|a|it|to|and|is|for|on|of|i|my|yo(u|ur))\b')
+
+    for sublist in lst:
+        filtered_words = [word for word in sublist if not regex.search(word)]
+        to_return.append(filtered_words)
+
+    return to_return
