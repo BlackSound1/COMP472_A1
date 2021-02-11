@@ -8,11 +8,11 @@ def read_documents(path: str) -> (list, list):
       Tuple of lists (words, labels) 
     """
     labels, docs = [], []
-    with open(path, 'r') as f:
+    with open(path, 'r', encoding='utf-8') as f:
         for line in f:
             words = line.strip().split()
             labels.append(words[1])
-            docs.append(' '.join(words[3:]))
+            docs.append(words[3:])
     return docs, labels
 
 
