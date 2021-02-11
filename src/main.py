@@ -18,7 +18,7 @@ X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split
 
 """Task 1 - Plot label distribution"""
 # Get label distribution
-label_distribution = utils.get_label_distribution(y)
+label_distribution = utils.get_label_distribution(y_train)
 print(label_distribution)
 
 # Plot label distribution
@@ -26,6 +26,9 @@ plt.figure()
 plt.bar(label_distribution.keys(), label_distribution.values(), 0.8)
 for a, b in enumerate(label_distribution.values()):
     plt.text(a, b, str(b), horizontalalignment='center')
+plt.title("Frequency of pos and neg")
+plt.xlabel("sentiment")
+plt.ylabel("frequency")    
 plt.show()
 
 """Task 2 - Naive Bayes Classifier"""
