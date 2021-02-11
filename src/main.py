@@ -72,10 +72,10 @@ for (name, y_pred) in models:
     pprint.pprint(report)
 
     for label in labels:
-        pre = report[label]['precision']
-        rec = report[label]['recall']
-        f1 = report[label]['f1-score']
-        scores.append([pre, rec, f1])
+        score_row = []
+        for score in score_list:
+            score_row.append(report[label][score])
+        scores.append(score_row)
 
     # Transpose score matrix
     scores = np.array([list(row) for row in zip(*scores)])
