@@ -1,15 +1,15 @@
 import utils
 import numpy as np
-import pprint
 import matplotlib.pyplot as plt
-from sklearn.naive_bayes import MultinomialNB
-from sklearn import metrics
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import MultinomialNB
+from sklearn.tree import DecisionTreeClassifier
 
 """Task 0 - Split training and evaluation data"""
 # Read data
-X, y = utils.read_documents('../input/all_sentiment_shuffled.txt')  
+X, y = utils.read_documents('../input/all_sentiment_shuffled.txt')
+
 count_vect = CountVectorizer(analyzer=lambda x: x)
 X_vectorized = count_vect.fit_transform(X)
 
@@ -24,12 +24,29 @@ print(label_distribution)
 # Plot label distribution
 plt.figure()
 plt.bar(label_distribution.keys(), label_distribution.values(), 0.8)
-for x, y in enumerate(label_distribution.values()):
-    plt.text(x, y, str(y), horizontalalignment='center')
+for a, b in enumerate(label_distribution.values()):
+    plt.text(a, b, str(b), horizontalalignment='center')
 plt.show()
 
-"""Task 2 - Naive Bayes"""
+"""Task 2 - Naive Bayes Classifier"""
 multiNB = MultinomialNB()
 multiNB.fit(X_train, y_train)
-y_pred = multiNB.predict(X_test)
-pprint.pprint(metrics.classification_report(y_test, y_pred, digits=4, output_dict=True))
+multiNB_pred = multiNB.predict(X_test)
+
+"""Task 2 - Base-DT"""
+baseDT = DecisionTreeClassifier(criterion='entropy')
+baseDT.fit(X_train, y_train)
+baseDT_pred = baseDT.predict(X_test)
+
+"""Task 2 - Best-DT"""
+bestDT = DecisionTreeClassifier()
+bestDT.fit(X_train, y_train)
+bestDT_pred = bestDT.predict(X_test)
+
+"""Task 3 - Generate output"""
+labels = sorted(list(set(y)))
+models = [('NaiveBayes', multiNB_pred),
+          ('BaseDT', baseDT_pred),
+          ('BestDT', bestDT_pred)]
+
+utils.generate_output(indices_test, y_test, labels, models)
