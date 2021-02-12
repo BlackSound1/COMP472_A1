@@ -1,3 +1,5 @@
+
+from re import compile, search
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 
@@ -17,7 +19,7 @@ def read_documents(path: str):
             words = line.strip().split()
             labels.append(words[1])
             docs.append(words[3:])
-    return docs, labels
+    return sanitize_text(docs), labels
 
 
 def get_label_distribution(all_labels: list) -> dict:
@@ -50,41 +52,63 @@ def generate_output(indices_test: list, y_test: list, labels: list, models: list
 
     for (name, y_pred) in models:
         f = open(f'../output/{name}-all_sentiment_shuffled.txt', 'w')
+        
+    # Write row and predicted class
+    for i in range(test_size):
+        f.write(f'{indices_test[i]}, {y_pred[i]}\n')
+    f.write('\n')
 
-        # Write row and predicted class
-        for i in range(test_size):
-            f.write(f'{indices_test[i]}, {y_pred[i]}\n')
+    # Write confusion matrix
+    f.write('confusion matrix\n')
+    matrix = confusion_matrix(y_test, y_pred)
+    np.savetxt(f, matrix, fmt='%-5d')
+    f.write('\n')
+
+    # Calculate scores
+    scores = []
+    report = classification_report(y_test, y_pred, digits=4, output_dict=True)
+
+    for label in labels:
+        score_row = []
+        for score in score_list:
+            score_row.append(report[label][score])
+        scores.append(score_row)
+
+    # Transpose score matrix
+    scores = np.array([list(row) for row in zip(*scores)])
+
+    # Write matrix
+    row_format = '{:<15}' + '{:<20}' * (len(labels))
+    f.write(row_format.format("", *labels) + '\n')
+    for type, row in zip(score_list, scores):
+        f.write(row_format.format(type, *row))
         f.write('\n')
+    f.write('\n')
 
-        # Write confusion matrix
-        f.write('confusion matrix\n')
-        matrix = confusion_matrix(y_test, y_pred)
-        np.savetxt(f, matrix, fmt='%-5d')
-        f.write('\n')
+    # Write accuracy
+    acc = str(report['accuracy'])
+    f.write("accuracy: " + acc)
 
-        # Calculate scores
-        scores = []
-        report = classification_report(y_test, y_pred, digits=4, output_dict=True)
+    f.close()    
 
-        for label in labels:
-            score_row = []
-            for score in score_list:
-                score_row.append(report[label][score])
-            scores.append(score_row)
 
-        # Transpose score matrix
-        scores = np.array([list(row) for row in zip(*scores)])
+def sanitize_text(lst: list) -> list:
+    """ Sanitizes input by removing numbers, special characters, and useless words
 
-        # Write matrix
-        row_format = '{:<15}' + '{:<20}' * (len(labels))
-        f.write(row_format.format("", *labels) + '\n')
-        for type, row in zip(score_list, scores):
-            f.write(row_format.format(type, *row))
-            f.write('\n')
-        f.write('\n')
+        Args:
+          lst (list): The list of text to convert
 
-        # Write accuracy
-        acc = str(report['accuracy'])
-        f.write("accuracy: " + acc)
+        Returns:
+          list: the new list without special characters or numbers
 
-        f.close()
+          e.g. ["hello", "1234", "#%$#"] -> ["hello"]
+        """
+    to_return = []
+    regex = \
+        compile(r'[\d!?,.()\]\[#$%^\"&*\'+=\-_\\/|]+|\b(th(e|ey|is|at|ere|eir)|an|a|it|to|and|is|for|on|of|i|my|yo(u|ur))\b')
+
+    for sublist in lst:
+        filtered_words = [word for word in sublist if not regex.search(word)]
+        to_return.append(filtered_words)
+
+    return to_return
