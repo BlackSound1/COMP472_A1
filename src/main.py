@@ -43,6 +43,7 @@ baseDT_pred = baseDT.predict(X_test)
 
 """Task 2 - Best-DT"""
 bestDT = DecisionTreeClassifier()
+bestDT = utils.get_best_model(X_train, y_train, bestDT, {"criterion": ["entropy", "gini"], "splitter": ["best", "random"]})
 bestDT.fit(X_train, y_train)
 bestDT_pred = bestDT.predict(X_test)
 

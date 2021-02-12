@@ -2,6 +2,7 @@
 from re import compile, search
 import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.model_selection import KFold, GridSearchCV
 
 
 def read_documents(path: str):
@@ -36,6 +37,24 @@ def get_label_distribution(all_labels: list) -> dict:
     labels = sorted(list(set(all_labels)))
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
+
+
+def get_best_model(X, y, estimator, estimator_test_params):
+    """Finds the best estimator by exhaustively searching the best parameters using cross-validation.
+
+    Args:
+      X (list): Training input.
+      y (list): Target input.
+      estimator (Object): Estimator.
+      estimator_test_params (dict): Dictionary of parameters to test on estimator.
+
+    Returns:
+      The best estimator based on the testing parameters.
+    """
+    cv = KFold(n_splits=3)
+    grid_search = GridSearchCV(estimator, estimator_test_params, cv=cv)
+    grid_search.fit(X, y)
+    return grid_search.best_estimator_
 
 
 def generate_output(indices_test: list, y_test: list, labels: list, models: list):
