@@ -53,43 +53,40 @@ def generate_output(indices_test: list, y_test: list, labels: list, models: list
     for (name, y_pred) in models:
         f = open(f'../output/{name}-all_sentiment_shuffled.txt', 'w')
         
-    # Write row and predicted class
-    for i in range(test_size):
-        f.write(f'{indices_test[i]}, {y_pred[i]}\n')
-    f.write('\n')
-
-    # Write confusion matrix
-    f.write('confusion matrix\n')
-    matrix = confusion_matrix(y_test, y_pred)
-    np.savetxt(f, matrix, fmt='%-5d')
-    f.write('\n')
-
-    # Calculate scores
-    scores = []
-    report = classification_report(y_test, y_pred, digits=4, output_dict=True)
-
-    for label in labels:
-        score_row = []
-        for score in score_list:
-            score_row.append(report[label][score])
-        scores.append(score_row)
-
-    # Transpose score matrix
-    scores = np.array([list(row) for row in zip(*scores)])
-
-    # Write matrix
-    row_format = '{:<15}' + '{:<20}' * (len(labels))
-    f.write(row_format.format("", *labels) + '\n')
-    for type, row in zip(score_list, scores):
-        f.write(row_format.format(type, *row))
+        # Write row and predicted class
+        for i in range(test_size):
+            f.write(f'{indices_test[i]}, {y_pred[i]}\n')
         f.write('\n')
-    f.write('\n')
 
-    # Write accuracy
-    acc = str(report['accuracy'])
-    f.write("accuracy: " + acc)
+        # Write confusion matrix
+        f.write('confusion matrix\n')
+        matrix = confusion_matrix(y_test, y_pred)
+        np.savetxt(f, matrix, fmt='%-5d')
+        f.write('\n')
 
-    f.close()    
+        # Calculate scores
+        scores = []
+        report = classification_report(y_test, y_pred, digits=4, output_dict=True)
+
+        for score in score_list:
+            score_row = []
+            for label in labels:
+                score_row.append(report[label][score])
+            scores.append(score_row)
+
+        # Write matrix
+        row_format = '{:<15}' + '{:<20}' * (len(labels))
+        f.write(row_format.format("", *labels) + '\n')
+        for type, row in zip(score_list, scores):
+            f.write(row_format.format(type, *row))
+            f.write('\n')
+        f.write('\n')
+
+        # Write accuracy
+        acc = str(report['accuracy'])
+        f.write("accuracy: " + acc)
+
+        f.close()    
 
 
 def sanitize_text(lst: list) -> list:
