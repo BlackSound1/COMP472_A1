@@ -1,4 +1,8 @@
+
 from re import compile, search
+import numpy as np
+from sklearn.metrics import confusion_matrix, classification_report
+
 
 
 def read_documents(path: str) -> (list, list):
@@ -18,6 +22,7 @@ def read_documents(path: str) -> (list, list):
             docs.append(words[3:])
     return sanitize_text(docs), labels
 
+
 def get_label_distribution(all_labels: list) -> dict:
     """Calculates distribution of labels.
 
@@ -33,19 +38,59 @@ def get_label_distribution(all_labels: list) -> dict:
     label_counts = {label: all_labels.count(label) for label in labels}
     return label_counts
 
-def list_to_string(list: list) -> str:
-    """ Converts a list into a str
+
+def generate_output(indices_test: list, y_test: list, labels: list, models: list):
+    """Generates output file for the given models.
 
     Args:
-      list (list): The list to convert
-
-    Returns:
-      str made from elements of the list.
-
-      e.g. "This was a list" 
+      indices_test (list): List of test indices.
+      y_test (list): List of test labels.
+      labels (list): List of unique labels.
+      models (list): List of models containing their name and label predictions.
     """
-    string = " "
-    return (string.join(list))
+    test_size = len(y_test)
+    score_list = ['precision', 'recall', 'f1-score']
+
+    for (name, y_pred) in models:
+        f = open(f'../output/{name}-all_sentiment_shuffled.txt', 'w')
+        
+    # Write row and predicted class
+    for i in range(test_size):
+        f.write(f'{indices_test[i]}, {y_pred[i]}\n')
+    f.write('\n')
+
+    # Write confusion matrix
+    f.write('confusion matrix\n')
+    matrix = confusion_matrix(y_test, y_pred)
+    np.savetxt(f, matrix, fmt='%-5d')
+    f.write('\n')
+
+    # Calculate scores
+    scores = []
+    report = classification_report(y_test, y_pred, digits=4, output_dict=True)
+
+    for label in labels:
+        score_row = []
+        for score in score_list:
+            score_row.append(report[label][score])
+        scores.append(score_row)
+
+    # Transpose score matrix
+    scores = np.array([list(row) for row in zip(*scores)])
+
+    # Write matrix
+    row_format = '{:<15}' + '{:<20}' * (len(labels))
+    f.write(row_format.format("", *labels) + '\n')
+    for type, row in zip(score_list, scores):
+        f.write(row_format.format(type, *row))
+        f.write('\n')
+    f.write('\n')
+
+    # Write accuracy
+    acc = str(report['accuracy'])
+    f.write("accuracy: " + acc)
+
+    f.close()    
 
 
 def sanitize_text(lst: list) -> list:
