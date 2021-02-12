@@ -2,7 +2,7 @@ import numpy as np
 from sklearn.metrics import confusion_matrix, classification_report
 
 
-def read_documents(path: str) -> (list, list):
+def read_documents(path: str):
     """Reads data file.
 
     Args:
