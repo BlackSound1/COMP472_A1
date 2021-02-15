@@ -25,7 +25,7 @@ def read_documents(path: str):
     return sanitize_text(docs), labels
 
 
-def get_label_distribution(all_labels: list) -> dict:
+def get_label_distribution(all_labels: list, save_plot_as: str=None) -> dict:
     """Calculates distribution of labels.
 
     Args:
@@ -36,8 +36,19 @@ def get_label_distribution(all_labels: list) -> dict:
 
       e.g. { 'health': 3, 'books': 45 }
     """
-    labels = sorted(list(set(all_labels)))
+    labels = sorted(set(all_labels))
     label_counts = {label: all_labels.count(label) for label in labels}
+
+    if save_plot_as:
+        plt.figure()
+        plt.bar(label_counts.keys(), label_counts.values(), 0.8)
+        for a, b in enumerate(label_counts.values()):
+            plt.text(a, b, str(b), horizontalalignment='center')
+        plt.title("Frequency of pos and neg")
+        plt.xlabel("sentiment")
+        plt.ylabel("frequency")    
+        plt.savefig(f'../output/{save_plot_as}.jpg')
+
     return label_counts
 
 
@@ -80,7 +91,7 @@ def generate_output(indices_test: list, y_test: list, labels: list, models: list
         f.write('\n')
 
         # Write confusion matrix
-        f.write('confusion matrix\n')
+        f.write(f'confusion matrix (row=truth, column=predicted, labels={labels})\n')
         matrix = confusion_matrix(y_test, y_pred)
         np.savetxt(f, matrix, fmt='%-5d')
         f.write('\n')
