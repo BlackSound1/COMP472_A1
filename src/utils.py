@@ -111,61 +111,61 @@ def generate_output(indices_test: list, y_test: list, labels: list, models: list
 
 
 def sanitize_text(lst: list) -> list:
-  """ Sanitizes input by removing numbers, special characters, and useless words
+    """ Sanitizes input by removing numbers, special characters, and useless words
 
-      Args:
-        lst (list): The list of text to convert
+        Args:
+          lst (list): The list of text to convert
 
-      Returns:
-        list: the new list without special characters or numbers
+        Returns:
+          list: the new list without special characters or numbers
 
-        e.g. ["hello", "1234", "#%$#"] -> ["hello"]
-  """
-  to_return = []
-  regex = \
-      compile(r'[\d!?,.()\]\[#$%^\"&*\'+=\-_\\/|]+|\b(th(e|ey|is|at|ere|eir)|an|a|it|to|and|is|for|on|of|i|my|yo(u|ur))\b')
+          e.g. ["hello", "1234", "#%$#"] -> ["hello"]
+    """
+    to_return = []
+    regex = \
+        compile(r'[\d!?,.()\]\[#$%^\"&*\'+=\-_\\/|]+|\b(th(e|ey|is|at|ere|eir)|an|a|it|to|and|is|for|on|of|i|my|yo(u|ur))\b')
 
-  for sublist in lst:
-      filtered_words = [word for word in sublist if not regex.search(word)]
-      to_return.append(filtered_words)
+    for sublist in lst:
+        filtered_words = [word for word in sublist if not regex.search(word)]
+        to_return.append(filtered_words)
 
-  return to_return
+    return to_return
 
 
 def analyze_ccp_alpha(X_train, X_test, y_train, y_test):
-  """ Analyses the relationship between the ccp_alphas parameter and accuracy for Decision Trees.
-      This function was created to perform analysis on the ccp_alpha parameter to see if tuning it 
-      improved the decision tree. It is not used in the normal running of the code as it takes much
-      too long to complete. It is present for completeness only.
-      Code derived from: https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html
+    """ Analyses the relationship between the ccp_alphas parameter and accuracy for Decision Trees.
+        This function was created to perform analysis on the ccp_alpha parameter to see if tuning it 
+        improved the decision tree. It is not used in the normal running of the code as it takes much
+        too long to complete. It is present for completeness only.
+        Code derived from: https://scikit-learn.org/stable/auto_examples/tree/plot_cost_complexity_pruning.html
 
-        Args:
-          X_train (array): The training documents
-          X_test (array): the testing documents
-          y_train (array): the training labels
-          y_test (array): the testing labels
-  """
-  classifier = DecisionTreeClassifier()
+          Args:
+            X_train (array): The training documents
+            X_test (array): the testing documents
+            y_train (array): the training labels
+            y_test (array): the testing labels
+    """
+    classifier = DecisionTreeClassifier()
 
-  path = classifier.cost_complexity_pruning_path(X_train, y_train)
-  ccp_alphas = path.ccp_alphas
+    path = classifier.cost_complexity_pruning_path(X_train, y_train)
+    ccp_alphas = path.ccp_alphas
 
-  classifiers = []
-  for ccp_alpha in ccp_alphas:
-      clf = DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)
-      clf.fit(X_train, y_train)
-      classifiers.append(clf)
+    classifiers = []
+    for ccp_alpha in ccp_alphas:
+        clf = DecisionTreeClassifier(random_state=0, ccp_alpha=ccp_alpha)
+        clf.fit(X_train, y_train)
+        classifiers.append(clf)
 
-  train_scores = [clf.score(X_train, y_train) for clf in classifiers]
-  test_scores = [clf.score(X_test, y_test) for clf in classifiers]
+    train_scores = [clf.score(X_train, y_train) for clf in classifiers]
+    test_scores = [clf.score(X_test, y_test) for clf in classifiers]
 
-  ax = plt.subplots()
-  ax.set_xlabel("Alpha")
-  ax.set_ylabel("Accuracy")
-  ax.set_title("Accuracy vs alpha for training and testing sets")
-  ax.plot(ccp_alphas, train_scores, marker='o', label="train",
-          drawstyle="steps-post")
-  ax.plot(ccp_alphas, test_scores, marker='o', label="test",
-          drawstyle="steps-post")
-  ax.legend()
-  plt.show()
+    ax = plt.subplots()
+    ax.set_xlabel("Alpha")
+    ax.set_ylabel("Accuracy")
+    ax.set_title("Accuracy vs alpha for training and testing sets")
+    ax.plot(ccp_alphas, train_scores, marker='o', label="train",
+            drawstyle="steps-post")
+    ax.plot(ccp_alphas, test_scores, marker='o', label="test",
+            drawstyle="steps-post")
+    ax.legend()
+    plt.show()
