@@ -42,6 +42,12 @@ baseDT.fit(X_train, y_train)
 baseDT_pred = baseDT.predict(X_test)
 
 """Task 2 - Best-DT"""
+# The following function Analyses the relationship between the ccp_alphas parameter and accuracy 
+# for Decision Trees. It is not active when we run the code because it takes to long to complete. 
+# It is present here to show where it would be used and for completeness only. 
+
+# analyze_ccp_alpha(X_train, X_test, y_train, y_test)
+
 bestDT = DecisionTreeClassifier(random_state=0)
 bestDT = utils.get_best_model(X_train, y_train, bestDT, {"criterion": ["entropy", "gini"], "splitter": ["best", "random"]})
 bestDT.fit(X_train, y_train)
