@@ -15,7 +15,7 @@ def main():
     X_vectorized = count_vect.fit_transform(X)
 
     # Split point between training and evaluation
-    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X_vectorized, y, np.arange(len(X)), test_size=0.2)
+    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X_vectorized, y, np.arange(1, len(X)+1), test_size=0.2)
 
     """Task 1 - Plot label distribution"""
     # Get label distribution
@@ -36,6 +36,8 @@ def main():
     multiNB = MultinomialNB()
     multiNB.fit(X_train, y_train)
     multiNB_pred = multiNB.predict(X_test)
+    multiNB_pred_prob = multiNB.predict_proba(X_test)
+    utils.generate_wrong_pred("NaiveBayes", indices_test, y_test, multiNB_pred, multiNB.classes_, multiNB_pred_prob)
 
     """Task 2 - Base-DT"""
     baseDT = DecisionTreeClassifier(criterion='entropy', random_state=0)
