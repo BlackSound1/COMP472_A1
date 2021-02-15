@@ -37,12 +37,13 @@ multiNB.fit(X_train, y_train)
 multiNB_pred = multiNB.predict(X_test)
 
 """Task 2 - Base-DT"""
-baseDT = DecisionTreeClassifier(criterion='entropy')
+baseDT = DecisionTreeClassifier(criterion='entropy', random_state=0)
 baseDT.fit(X_train, y_train)
 baseDT_pred = baseDT.predict(X_test)
 
 """Task 2 - Best-DT"""
-bestDT = DecisionTreeClassifier()
+bestDT = DecisionTreeClassifier(random_state=0)
+bestDT = utils.get_best_model(X_train, y_train, bestDT, {"criterion": ["entropy", "gini"], "splitter": ["best", "random"]})
 bestDT.fit(X_train, y_train)
 bestDT_pred = bestDT.predict(X_test)
 
