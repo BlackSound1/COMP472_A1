@@ -180,3 +180,16 @@ def analyze_ccp_alpha(X_train, X_test, y_train, y_test):
             drawstyle="steps-post")
     ax.legend()
     plt.show()
+
+
+def generate_wrong_pred(name, rows, y_test, y_pred, classes, probs):
+    wrong_pred = []
+    f = open(f'../output/{name}-all_sentiment_shuffled-error.txt', 'w')
+
+    for row, truth, pred, prob in zip(rows, y_test, y_pred, probs):
+        if truth != pred:
+            wrong_pred.append((row, truth, pred, prob[list(classes).index(pred)]))
+            f.write(f'{row}, {pred}, {prob[list(classes).index(pred)]}\n')
+
+    f.close()
+    return wrong_pred
