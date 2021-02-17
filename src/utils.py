@@ -194,16 +194,10 @@ def generate_wrong_pred(name, rows, y_test, y_pred, classes, probs):
     f.close()
     return wrong_pred
 
-def save_graphical_confusion_matrix(model, X_test, y_test, type: str):
-  matrix = plot_confusion_matrix(model, X_test, y_test, labels=["pos", "neg"])
+def save_graphical_confusion_matrix(model, X_test, y_test, model_name: str):
+    matrix = plot_confusion_matrix(model, X_test, y_test)
 
-  if type == "NB":
-    matrix.ax_.set_title("Naive Bayes Confusion Matrix")
-    plt.savefig("../output/NB-confusion-matrix.png")
-  elif type == "DT-base":
-    matrix.ax_.set_title("DT-base Confusion Matrix")
-    plt.savefig("../output/DT-base-confusion-matrix.png")  
-  elif type == "DT-best":
-    matrix.ax_.set_title("DT-best Confusion Matrix")
-    plt.savefig("../output/DT-best-confusion-matrix.png")  
+    matrix.ax_.set_title(f"{model_name} Confusion Matrix")
+    plt.savefig(f"../output/{model_name}-confusion-matrix.png")
+
   
