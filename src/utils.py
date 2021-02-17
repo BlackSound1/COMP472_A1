@@ -1,7 +1,7 @@
 
 from re import compile, search
 import numpy as np
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix, classification_report, plot_confusion_matrix
 from sklearn.model_selection import KFold, GridSearchCV
 from matplotlib import pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
@@ -47,7 +47,7 @@ def get_label_distribution(all_labels: list, save_plot_as: str=None) -> dict:
         plt.title("Frequency of pos and neg")
         plt.xlabel("sentiment")
         plt.ylabel("frequency")    
-        plt.savefig(f'../output/{save_plot_as}.jpg')
+        plt.savefig(f'../output/{save_plot_as}.png')
 
     return label_counts
 
@@ -193,3 +193,11 @@ def generate_wrong_pred(name, rows, y_test, y_pred, classes, probs):
 
     f.close()
     return wrong_pred
+
+def save_graphical_confusion_matrix(model, X_test, y_test, model_name: str):
+    matrix = plot_confusion_matrix(model, X_test, y_test)
+
+    matrix.ax_.set_title(f"{model_name} Confusion Matrix")
+    plt.savefig(f"../output/{model_name}-confusion-matrix.png")
+
+  
