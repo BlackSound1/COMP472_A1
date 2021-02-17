@@ -1,7 +1,7 @@
 
 from re import compile, search
 import numpy as np
-from sklearn.metrics import confusion_matrix, classification_report
+from sklearn.metrics import confusion_matrix, classification_report, plot_confusion_matrix
 from sklearn.model_selection import KFold, GridSearchCV
 from matplotlib import pyplot as plt
 from sklearn.tree import DecisionTreeClassifier
@@ -193,3 +193,17 @@ def generate_wrong_pred(name, rows, y_test, y_pred, classes, probs):
 
     f.close()
     return wrong_pred
+
+def save_graphical_confusion_matrix(model, X_test, y_test, type: str):
+  matrix = plot_confusion_matrix(model, X_test, y_test, labels=["pos", "neg"])
+
+  if type == "NB":
+    matrix.ax_.set_title("Naive Bayes Confusion Matrix")
+    plt.savefig("../output/NB-confusion-matrix.png")
+  elif type == "DT-base":
+    matrix.ax_.set_title("DT-base Confusion Matrix")
+    plt.savefig("../output/DT-base-confusion-matrix.png")  
+  elif type == "DT-best":
+    matrix.ax_.set_title("DT-best Confusion Matrix")
+    plt.savefig("../output/DT-best-confusion-matrix.png")  
+  

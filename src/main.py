@@ -28,11 +28,13 @@ def main():
     multiNB_pred = multiNB.predict(X_test)
     multiNB_pred_prob = multiNB.predict_proba(X_test)
     utils.generate_wrong_pred("NaiveBayes", indices_test, y_test, multiNB_pred, multiNB.classes_, multiNB_pred_prob)
+    utils.save_graphical_confusion_matrix(multiNB, X_test, y_test, "NB")
 
     """Task 2 - Base-DT"""
     baseDT = DecisionTreeClassifier(criterion='entropy', random_state=0)
     baseDT.fit(X_train, y_train)
     baseDT_pred = baseDT.predict(X_test)
+    utils.save_graphical_confusion_matrix(baseDT, X_test, y_test, "DT-base")
 
     """Task 2 - Best-DT"""
     # The following function Analyses the relationship between the ccp_alphas parameter and accuracy 
@@ -45,6 +47,7 @@ def main():
     bestDT = utils.get_best_model(X_train, y_train, bestDT, {"criterion": ["entropy", "gini"], "splitter": ["best", "random"]})
     bestDT.fit(X_train, y_train)
     bestDT_pred = bestDT.predict(X_test)
+    utils.save_graphical_confusion_matrix(bestDT, X_test, y_test, "DT-best")
 
     """Task 3 - Generate output"""
     labels = sorted(set(y))
