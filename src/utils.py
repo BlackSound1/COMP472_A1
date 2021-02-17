@@ -47,7 +47,7 @@ def get_label_distribution(all_labels: list, save_plot_as: str=None) -> dict:
         plt.title("Frequency of pos and neg")
         plt.xlabel("sentiment")
         plt.ylabel("frequency")    
-        plt.savefig(f'../output/{save_plot_as}.jpg')
+        plt.savefig(f'../output/{save_plot_as}.png')
 
     return label_counts
 
