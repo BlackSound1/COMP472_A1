@@ -1,0 +1,35 @@
+
+Types of noisy input
+  1. Mislabeling
+  2. Very long documents
+  3. Non-review documents
+  4. Misspelling
+  5. Mixed sentiment
+
+
+1. Mislabeling 
+
+2077 camera pos 90.txt i cannot help but giggle when i saw comments like " great lens for the money " . it is selling for $440 at here , even on so-called clearance . however , one can easily find the same lens at least $50 cheaper at some decent online camera store , such as b&h , ritz camera , etc. sad amazon. . 
+
+6139 books neg 440.txt this book is an excellent reference book for the serious ghost hunter / paranormal investigator . provides good case histories as well as " ghost stories " that can be used as examples on investigations 
+
+8292 software pos 91.txt while i love the content and the overall idea , it seems they seriously skimped on the packaging . all you get , outside of the outer box , is a cd in a paper envelope . no jewel case , book , insert , etc.......perhaps it 's on the cd 
+
+
+2. Very long documents
+
+11450 dvd neg 924.txt whether william golding deserved nobel prize or not is still a debatable point , but it is true that he wrote one marvelous book , and its name is ` lord of the flies . ' but let 's not talk about the differences between the book and the film for a while - because after all no one i am afraid can bring the multi-layered world of words onto the screen . even those who loved the 1963 version would admit that . you can interpret the meaning of ` lord of the flies ' but who can really visualize it , or the imaginary conversations of simon for that matter ? the biggest problem of harry hook 's new version is not the changes done to the film . the boys are american military school cadets , using dirty words frequently , but those parts did n't annoy me much . real problem is something more essential to the film , which is storytelling . in short the 1990 film does n't know what it wants to be . on the film 's video cover you can read ( and i quote ) ` this stunning adventure explores the deep dark corner of the human soul . " well , not exactly . for as adventure story it lacks pace ; the film always feels rushed and often needs better editing . as allegory it needs more distinctive personalities for each character . the conflict between ralph and jack should be clearer , and piggy 's role should be more than that of a whining fat boy . and do n't forget simon , who sees things , it is true , but definitely not those things that the film actually shows us . it is a pity that the cinematography is so beautiful . it could have been a perfect backdrop against which dark allegorical survival story would develop , opposite of optimistic tales of jules verne 's adventure stories . by watching this film you can follow the story of the book , but find no tension or thought-provoking words in it . balthazar getty 's feature film debut . and lewis m. allen , one of the producers of the film , had also produced peter brook version in 1963 
+
+
+3. Non-review documents
+
+8463 books neg 7.txt noam chomsky has thrived greatly in this great country of his , yours , and mine - the united states of america . he has made millions of dollars teaching , lecturing , selling his books , and investing . his world-wide fame in psycholinguistics is well-deserved . his infamy is merited for his lack of loyalty to his own jewish ethnicity and the u.s. , in spite of the fruits he has received by being a citizen of the united states . he has repaid this country in bile with his incredibly biased analysis of american foreign policy . he goes way beyond a balanced multiculturism , when he always ranks the u.s. and israel as foremost among the terrorist forces in the world now , and even in history . his distrust of any authority , benign or otherwise , is reflected in his dogmatic and unexamined support of the " underdog , " even if that underdog is a suicide bomber or a major terrorist organization such as al queda or hezbollah . yet since 1955 , hypocrite chomsky has worked for the " overdog " massachusetts institute of technology , which has actively and enthusiastically participated in the development of weapons of war and mass destruction , and continues to this very day . chomsky trumps his own potential for gifted analytic objectivity with his simple hatred of the united states and the jewish state . if he were not so attached to the freedom of making money , earning the adulation of the american left , and freedom to express himself , he might be able to give more direct and personal support for our enemies and his friends by taking up residence in north korea , iran , or syria . let us hope he retires outside of our homeland that he hates so much , the united states of america . god bless america , which will continue to give chomsky the right to speak , teach , and make lots of money . raybo 
+
+
+4. Misspelling
+
+
+
+5. Mixed sentiment
+
+3 books neg 729.txt i have introduced many of my ell , high school students to lois lowery and the depth of her characters . she is a brilliant writer and capable of inspiring fierce passion in her readers as they encounter shocking details of her utopian worlds . i was anxious to read this companion novel and had planned to share it with my class this january . although the series is written for 6th graders and older , this book 's simplicity , in its message , language and writing style will inspire no one . i am sadly disappointed 
