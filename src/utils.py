@@ -156,10 +156,10 @@ def analyze_ccp_alpha(X_train, X_test, y_train, y_test):
             y_train (array): the training labels
             y_test (array): the testing labels
     """
-    classifier = DecisionTreeClassifier()
+    classifier = DecisionTreeClassifier(random_state=0)
 
     path = classifier.cost_complexity_pruning_path(X_train, y_train)
-    ccp_alphas = path.ccp_alphas
+    ccp_alphas, impurities = path.ccp_alphas, path.impurities
 
     classifiers = []
     for ccp_alpha in ccp_alphas:
@@ -170,7 +170,7 @@ def analyze_ccp_alpha(X_train, X_test, y_train, y_test):
     train_scores = [clf.score(X_train, y_train) for clf in classifiers]
     test_scores = [clf.score(X_test, y_test) for clf in classifiers]
 
-    ax = plt.subplots()
+    fig, ax = plt.subplots()
     ax.set_xlabel("Alpha")
     ax.set_ylabel("Accuracy")
     ax.set_title("Accuracy vs alpha for training and testing sets")
