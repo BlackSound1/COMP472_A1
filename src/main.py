@@ -15,7 +15,7 @@ def main():
     X_vectorized = count_vect.fit_transform(X)
 
     # Split point between training and evaluation
-    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X_vectorized, y, np.arange(1, len(X)+1), test_size=0.2)
+    X_train, X_test, y_train, y_test, indices_train, indices_test = train_test_split(X_vectorized, y, np.arange(1, len(X)+1), test_size=3, shuffle=False)
 
     """Task 1 - Plot label distribution"""
     # Get label distribution
