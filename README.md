@@ -1,4 +1,4 @@
-# COMP472_A1
+# Machine-Learning-Sentiment-Analysis 
 
 ## Instructions
 
